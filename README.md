@@ -4,7 +4,7 @@ A command-line tool written in rust to convert Twitch stream marker file (.csv) 
 # How it works (and motivations)
 Motivations were "I don't trust things to stay online forever, and prefer offline". The project that I'm referring to is [this one](https://enbyss.com/tools/marker-converter). It's more or less 1-to-1.
 
-Technical jargon incoming:<br />Twitch records times as "`time`, `admin level` (which is redundant, as you need to be editor to add markers), `user` and `description`". However, edl files seem rather different. So we boil it down to barebones template. Then, using that template, we iterate over csv entries, and swap them out. Obviously there's some conversion happening (as edl files use `TC:HH:MM:SS`, instead of `HH:MM:SS`).<br />If you're curious, just check the `main.rs`. There's comments and probably lots of bad code.
+Technical jargon incoming:<br />Twitch records times as "`time`, `admin level` (which is redundant, as you need to be editor to add markers), `user` and `description`". However, edl files seem rather different. So we boil it down to barebones template. Then, using that template, we iterate over csv entries, and swap them out. Obviously there's some conversion happening (as edl files use `HH:MM:SS:MS`, instead of `HH:MM:SS`).<br />If you're curious, just check the `main.rs`. There's comments and probably lots of bad code.
 
 # Usage
 The usage is simple, and if you fail to enter it, it will prompt you with correct usage.
