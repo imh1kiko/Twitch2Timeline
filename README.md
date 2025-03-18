@@ -9,7 +9,7 @@ Technical jargon incoming:<br />Twitch records times as "`time`, `admin level` (
 # Usage
 The usage is simple, and if you fail to enter it, it will prompt you with correct usage.
 
-`Usage: Twitch2Timeline.exe <INPUT FILE> <MARKER COLOR> <TIMECODE OFFSET> <OUTPUT NAME>`<br />
+`Usage: Twitch2Timeline.exe <INPUT FILE> <MARKER COLOR> <HOUR OFFSET> <OUTPUT NAME>`<br />
 
 `INPUT FILE` - This is your csv file. You can drag and drop this to your CLi.
 
@@ -34,7 +34,7 @@ For now, the colors are what Davinci Resolve supports:
 - Cream<br />
 In case of misspelling or wrong usage, will default to blue.
 
-`TIMECODE OFFSET` - Where your timeline starts at. The default is 0. So if you want 01:00:00:00, you'd use "1". Hopefully clear enough example.
+`HOUR OFFSET` - Where your timeline starts at. The default is 0. So if you want 01:00:00:00, you'd use "1". Hopefully clear enough example.
 
 `OUTPUT NAME` - Self-explanatory. A name for the file. No need for `.edl` suffix. Didn't code in the check for it either.
 
