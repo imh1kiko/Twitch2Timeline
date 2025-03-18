@@ -3,24 +3,23 @@ use std::io::{BufRead, Write};
 
 // Custom implementation, as Chronos didn't cut.
 struct ResolveEdlTime {
-    start_time_code: u32,
     hours: u32,
     minutes: u32,
     seconds: u32,
+    milliseconds: u32,
 }
 impl ResolveEdlTime {
     // Create a new instance of ResolveEdlTime by splicing : into vector of u32
     fn new(time: &str, offset:u32) -> ResolveEdlTime {
-        let time: Vec<&str> = time.split(":").collect();
-        // start_time_code takes hours and divides by 60, hours is the remainder
-        let start_time_code:u32 = (&time[0].parse::<u32>().unwrap()/60)+offset;
-        let hours:u32 = &time[0].parse::<u32>().unwrap()%60;
+        let time: Vec<u32> = time.split(":").map(|x| x.parse::<u32>().unwrap()).collect();
+        let hours:u32 = &time[0]+offset;
 
         ResolveEdlTime {
-            start_time_code,
             hours,
-            minutes: time[1].parse().unwrap(),
-            seconds: time[2].parse().unwrap(),
+            minutes: time[1],
+            seconds: time[2],
+            // As we got no milliseconds to work with
+            milliseconds: 0,
         }
     }
     fn add_seconds(&self, seconds:u32) -> ResolveEdlTime {
@@ -36,18 +35,18 @@ impl ResolveEdlTime {
             new_hours += 1;
         }
         ResolveEdlTime {
-            start_time_code: self.start_time_code,
             hours: new_hours,
             minutes: new_minutes,
             seconds: new_seconds,
+            milliseconds: self.milliseconds,
         }
     }
     fn marker_start(&self) -> String {
-        format!("{:02}:{:02}:{:02}:{:02}", self.start_time_code, self.hours, self.minutes, self.seconds)
+        format!("{:02}:{:02}:{:02}:{:02}",self.hours, self.minutes, self.seconds, self.milliseconds)
     }
     fn marker_end(&self) -> String {
         let end_time = self.add_seconds(1);
-        format!("{:02}:{:02}:{:02}:{:02}", self.start_time_code, end_time.hours, end_time.minutes, end_time.seconds)
+        format!("{:02}:{:02}:{:02}:{:02}", end_time.hours, end_time.minutes, end_time.seconds, end_time.milliseconds)
     }
 }
 
