@@ -55,24 +55,23 @@ fn main() {
     // Get CLi arguments, ignore first argument
     let args: Vec<String> = std::env::args().skip(1).collect();
     // if args aren't supplied, or not met with correct amount, error out
-    if args.len() != 5 {
-        eprintln!("Usage: <INPUT FILE> <TIMELINE TITLE> <MARKER COLOR> <TIMECODE OFFSET> <OUTPUT NAME>");
+    if args.len() != 4 {
+        eprintln!("Usage: Twitch2Timeline <INPUT FILE> <MARKER COLOR> <TIMECODE OFFSET> <OUTPUT NAME>");
         std::process::exit(1);
     }
     // supply the args to constructor
     construct_edl_section(
         args[0].clone(),
         args[1].clone(),
-        args[2].clone(),
-        args[3].clone().parse::<u32>().unwrap(),
-        args[4].clone()
+        args[2].clone().parse::<u32>().unwrap(),
+        args[3].clone()
     );
 }
 
-fn construct_edl_section(input_file:String, title:String, color_name:String, timecode_offset:u32, output_name:String) {
+fn construct_edl_section(input_file:String, color_name:String, timecode_offset:u32, output_name:String) {
     let header: &str = "TITLE: {}\nFCM: NON-DROP FRAME\n\n";
     // Keeps track of marker number
-    let mut iterator:u32 = 0;
+    let mut iterator:u32 = 1;
     // This holds the lines to prevent unnecessary writes to the file
     let mut edl_lines:String = String::new();
     // We open the file user gave through CLi
@@ -107,7 +106,7 @@ fn construct_edl_section(input_file:String, title:String, color_name:String, tim
     }
     // Combine the header and edl_lines
     let mut combined = String::new();
-    combined.push_str(&*header.replace("{}", title.as_str()));
+    combined.push_str(&*header.replace("{}", "Twitch CSV to Resolve EDL"));
     combined.push_str(edl_lines.as_str());
 
     // Write to file
